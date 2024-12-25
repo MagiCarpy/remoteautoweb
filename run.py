@@ -8,5 +8,6 @@ if __name__ == "__main__":
         # db.session.add(Devices(deviceName="light", status=0))
         # db.session.commit()
         # Devices.query.all()[0].status = 1
+        # db.session.delete(Devices.query.all()[1])
         # db.session.commit()
         app.run(debug=True)

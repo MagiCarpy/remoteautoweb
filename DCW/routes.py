@@ -61,5 +61,6 @@ def devices():
         else:
             devices[0].status = 0
         db.session.commit()
+        flash
     print(devices[0].status)
     return render_template("devices.html", title="devices", devices=devices)
