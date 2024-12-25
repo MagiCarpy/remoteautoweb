@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{% block body %}
+<div class="container card">
+    <form method="POST" action="" class="row justify-content-center card-body">
+        {{form.hidden_tag()}} <!-- adds csrf token -->
+        <fieldset class="col-6" style="min-width: 300px;">
+            <legend>Sign In</legend>
+            <div>
+                {{form.username.label()}}
+                {% if form.username.errors %}
+                    {{form.username(class="form-control is-invalid")}}
+                    <div class="invalid-feedback">
+                        {% for error in form.username.errors %}
+                        <span>{{error}}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{form.username(class="form-control")}}
+                {% endif %}
+            </div>
+            <div>
+                {{form.password.label()}}
+                {% if form.password.errors %}
+                    {{form.password(class="form-control is-invalid")}}
+                    <div class="invalid-feedback">
+                        {% for error in form.password.errors %}
+                        <span>{{error}}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{form.password(class="form-control")}}
+                {% endif %}
+            </div>
+            <br>
+            <div>
+                {{form.submit(class="btn btn-outline-dark")}}
+            </div>
+        </fieldset>
+    </form> 
+</div>
+
+
+{% endblock body %}

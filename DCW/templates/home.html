@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block body %}
+<div class="card">
+    <div class="card-body">
+        {% if current_user.is_authenticated %}
+        <h1>Welcome {{current_user.username}}</h1>
+        <hr>
+        Use the device manager tab to control a device remotely
+        from anywhere.
+        {% else %}
+        <h1>Device Control Website</h1>
+        <hr>
+        The Device Control Website is a more secure version of
+        its predecessor, the Remote Automation Website. 
+        <br><br>
+        Currently only supports a single light, but will 
+        eventually allow users to remotely manage devices 
+        through the website and add new devices.
+        <br><br>
+        Communicates with a raspberry pi which interacts with
+        the device.
+        {% endif %}
+    </div>
+  </div>
+{% endblock body %}
