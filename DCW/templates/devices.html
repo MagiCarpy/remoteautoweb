@@ -5,24 +5,31 @@
         {% if current_user.is_authenticated %}
             <h1>Device Manager</h1>
             <hr>
-            <form action="" method="POST">
-                <div class="parent">
-                    <div class="child">
-                            <label class="switch">
-                                <input name="light" type="checkbox" {% if devices[0].status == 1 %}checked{% endif %}>
-                                <span class="slider round"></span>
-                            </label>
-                    </div>
-                    <div class="child">
-                        <h3 style="margin-bottom: 5px;">Light</h3>
-                    </div>
+            
+            <div class="deviceContainer">
+                <div class="child">
+                        <label class="switch">
+                            <input id="switch" name="light" type="checkbox" 
+                            {% if devices[0].status == 1 %}checked{% endif %}>
+                            <span class="slider round"></span>
+                        </label>
                 </div>
-                <br>
-                <input type="submit" value="Submit">
-            </form>
+                <div class="child">
+                    <h3 style="margin-bottom: 5px;">Light</h3>
+                </div>
+            </div>
+
+            <br>
+            
+
+            
+            <br>
+
         {% endif %}
     </div>
   </div>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="{{ url_for('static', filename='main.js') }}"></script>
 
 
 {% endblock body %}

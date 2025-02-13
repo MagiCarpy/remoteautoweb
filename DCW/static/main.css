@@ -147,7 +147,7 @@ body {
 
   /* div alignment */
 
-  .parent {
+  .deviceContainer {
     text-align: left;
   }
   .child {

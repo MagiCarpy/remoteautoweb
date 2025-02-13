@@ -57,15 +57,17 @@ def logout():
 def devices():
     devices = Device.query.all()
     if request.method == 'POST':
-        # make cleaner when more devices
-        data = request.form
-        if data.get('light'):
+        # FIXME: make cleaner when more devices
+        data = request.json
+        # data = request.form
+        print(data)
+        if data.get('status'):
             devices[0].status = 1
         else:
             devices[0].status = 0
         db.session.commit()
         flash
-    # print(devices[0].status)
+    print(f"SERVER STATUS (DEVICES):{devices[0].status}")
     return render_template("devices.html", title="devices", devices=devices)
 
     
