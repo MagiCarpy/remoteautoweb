@@ -1,11 +1,11 @@
-from DCW import app, db, bcrypt
+from DCW import app, db, bcrypt, api
 from flask import render_template, url_for, request, redirect, flash
 from flask_login import login_user, current_user, logout_user, login_required
 from DCW.forms import LoginForm, RegisterForm
 from DCW.models import User, Device
-import json
-import time
-import requests
+from DCW.resources.devicesAPI import DevicesAPI
+api.add_resource(DevicesAPI, '/api/devices/')
+import json, time, requests
 
 @app.route("/")
 @app.route("/home")
@@ -57,17 +57,15 @@ def logout():
 def devices():
     devices = Device.query.all()
     if request.method == 'POST':
-        # FIXME: make cleaner when more devices
+        # FIXME: make modular with more devices
         data = request.json
-        # data = request.form
-        print(data)
+
         if data.get('status'):
             devices[0].status = 1
         else:
             devices[0].status = 0
         db.session.commit()
-        flash
-    print(f"SERVER STATUS (DEVICES):{devices[0].status}")
+
     return render_template("devices.html", title="devices", devices=devices)
 
     
@@ -82,10 +80,9 @@ def poll():
     while True:
         client_status = client_json.get("status")
 
-        # get server API JSON body and convert to dict
-        server_data = requests.get("http://127.0.0.1:5000/api/devices/")
-        server_json = server_data.json()[0]
-        server_status = server_json.get("status")
+        # get server API body as dict
+        server_data = DevicesAPI().get()
+        server_status = server_data[0].get("status")
 
         print(f'Server Status: {server_status}')
 

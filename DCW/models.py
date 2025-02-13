@@ -19,3 +19,7 @@ class Device(db.Model):
 
     def __repr__(self):
         return f'Device(name={self.deviceName}, status={self.status})'
+
+    def toggleDevice(self, state):
+        self.status = state
+        db.session.commit()
