@@ -2,7 +2,10 @@ from DCW import app, db, bcrypt
 from flask import render_template, url_for, request, redirect, flash
 from flask_login import login_user, current_user, logout_user, login_required
 from DCW.forms import LoginForm, RegisterForm
-from DCW.models import User, Devices
+from DCW.models import User, Device
+import json
+import time
+import requests
 
 @app.route("/")
 @app.route("/home")
@@ -52,7 +55,7 @@ def logout():
 @app.route("/devices", methods=['GET', 'POST'])
 @login_required
 def devices():
-    devices = Devices.query.all()
+    devices = Device.query.all()
     if request.method == 'POST':
         # make cleaner when more devices
         data = request.form
@@ -62,5 +65,37 @@ def devices():
             devices[0].status = 0
         db.session.commit()
         flash
-    print(devices[0].status)
+    # print(devices[0].status)
     return render_template("devices.html", title="devices", devices=devices)
+
+    
+# Long Polling Endpoint
+@app.route("/poll", methods = ["POST"])
+def poll():
+
+    # get client JSON post data and convert to dict
+    client_data = request.get_json()
+    client_json = json.loads(client_data)
+
+    while True:
+        client_status = client_json.get("status")
+
+        # get server API JSON body and convert to dict
+        server_data = requests.get("http://127.0.0.1:5000/api/devices/")
+        server_json = server_data.json()[0]
+        server_status = server_json.get("status")
+
+        print(f'Server Status: {server_status}')
+
+        # send response to client if change in server status
+        if server_status != client_status:
+            server_data = {
+                "id": 1,
+                "deviceName": "light",
+                "status": server_status
+            }
+            server_json = json.dumps(server_data)
+            return server_json
+
+        time.sleep(1)
+    return "DEVICE POLL"

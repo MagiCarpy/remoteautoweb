@@ -12,7 +12,10 @@ class User(db.Model, UserMixin):
     # image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
     password = db.Column(db.String(60), unique=True, nullable=False)
 
-class Devices(db.Model):
+class Device(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     deviceName = db.Column(db.String(20), nullable=False)
     status = db.Column(db.Integer, nullable=False)
+
+    def __repr__(self):
+        return f'Device(name={self.deviceName}, status={self.status})'

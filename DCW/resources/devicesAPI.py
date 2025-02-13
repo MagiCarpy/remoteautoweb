@@ -1,6 +1,7 @@
-from DCW.models import Devices
+from DCW.models import Device
 from flask_restful import Resource, fields, marshal_with
 from DCW import api
+import json
 
 devicesFields = {
     'id':fields.Integer,
@@ -11,5 +12,6 @@ devicesFields = {
 class DevicesAPI(Resource):
     @marshal_with(devicesFields)
     def get(self):
-        devices = Devices.query.all()
+        devices = Device.query.all()
         return devices
+
