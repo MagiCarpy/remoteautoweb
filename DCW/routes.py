@@ -1,10 +1,9 @@
-from DCW import app, db, bcrypt, api
+from DCW import app, db, bcrypt
 from flask import render_template, url_for, request, redirect, flash
 from flask_login import login_user, current_user, logout_user, login_required
 from DCW.forms import LoginForm, RegisterForm
 from DCW.models import User, Device
 from DCW.resources.devicesAPI import DevicesAPI
-api.add_resource(DevicesAPI, '/api/devices/')
 import json, time, requests
 
 @app.route("/")

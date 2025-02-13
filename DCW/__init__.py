@@ -21,7 +21,7 @@ login_manager.login_message_category = 'info'
 
 api = Api(app)
 
-# from DCW.resources.devicesAPI import DevicesAPI
-# api.add_resource(DevicesAPI, '/api/devices/')
+from DCW.resources.devicesAPI import DevicesAPI
+api.add_resource(DevicesAPI, '/api/devices/')
 
 from DCW import routes
